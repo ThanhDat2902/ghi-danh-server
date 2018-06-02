@@ -1,0 +1,28 @@
+{
+  "name": "todoapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "csv": "^3.0.2",
+    "csv-writer": "^1.0.0",
+    "csvtojson": "^1.1.9",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.15.5",
+    "mongoose": "^5.0.13",
+    "mongoose-paginate": "^5.0.3",
+    "mongoose-sequence": "^4.0.1",
+    "morgan": "~1.9.0",
+    "nodemon": "^1.17.3",
+    "serve-favicon": "~2.4.5"
+  },
+  "devDependencies": {
+    "@angular/cli": "^1.7.4"
+  }
+}
