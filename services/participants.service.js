@@ -1,6 +1,7 @@
 // Gettign the Newly created Mongoose Model we just created 
 
 var Participant = require('../models/participant.model')
+var Bedroom = require('../models/bedroom.model')
 
 // Saving the context of this module inside the _the variable
 _this = this
@@ -20,10 +21,10 @@ exports.getParticipants = async function(query, page, limit){
     
     try {
         //var participants = await Participant.paginate(query, options)
-        var participants = await Participant.find(query).populate('bedroom');
-        
-        // Return the room list that was retured by the mongoose promise
+        var participants = await Participant.find(query);
+
         return participants;
+        
 
     } catch (e) {
 
@@ -119,6 +120,7 @@ exports.updateParticipant = async function(participant){
     oldParticipant.surname = participant.surname || oldParticipant.surname,
     oldParticipant.gender = participant.gender || oldParticipant.gender,
     oldParticipant.dharma_name = participant.dharma_name || oldParticipant.dharma_name,
+    
     oldParticipant.birth_date = participant.birth_date || oldParticipant.birth_date,
     oldParticipant.previous_seminars = participant.previous_seminars || oldParticipant.previous_seminars,
 

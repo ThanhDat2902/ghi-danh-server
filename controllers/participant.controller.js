@@ -1,4 +1,5 @@
 var ParticipantService = require('../services/participants.service');
+var BedroomService = require('../services/bedrooms.service');
 var createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 // Saving the context of this module inside the _the variable
@@ -40,7 +41,7 @@ exports.getParticipant = async function(req, res, next){
 	try{
 	
 		var participant = await ParticipantService.getParticipants({_id: id}, page, limit)
-		
+
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
 		return res.status(200).json(participant[0]);
