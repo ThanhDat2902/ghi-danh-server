@@ -12,6 +12,7 @@ exports.getParticipantsCSV = async function(req,res,next){
 	const csvWriter = createCsvWriter({
 		path: '../file.csv',
 		header: [
+			{id: 'participant_id', title: 'participant_id'},
 			{id: 'surname', title: 'surname'},
 			{id: 'name', title: 'name'},
 			{id: 'dharma_name', title: 'dharma_name'},
@@ -60,6 +61,7 @@ exports.getParticipantNametagCSV = async function(req,res,next){
 	const csvWriter = createCsvWriter({
 		path: '../file.csv',
 		header: [
+			{id: 'participant_id', title: 'participant_id'},
 			{id: 'surname', title: 'surname'},
 			{id: 'name', title: 'name'},
 			{id: 'dharma_name', title: 'dharma_name'},

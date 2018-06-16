@@ -9,7 +9,7 @@ var CSVController = require('../../controllers/csv.controller');
 
 // Map each API to the Controller Functions
 
-router.get('/csv',CSVController.getParticipantsCSV)
+router.get('/participants',CSVController.getParticipantsCSV)
 
 router.get('/nametag',CSVController.getParticipantNametagCSV)
 
