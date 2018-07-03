@@ -269,11 +269,12 @@ exports.getParticipantsCountry = async function(req, res, next){
                 var classJson = {};
                 var participants = await ParticipantService.getParticipants({address_country: element}, 1, 1000);
                 
-                classJson[element] = participants.length;
+                classJson["country"] = element;
+                classJson["count"] = participants.length;
                 classes_with_participants.push(classJson);
 
                if (index === list_of_classes.length - 1){
-                    return res.status(200).json({status: 200, data: classes_with_participants, message: "Succesfully recieved a lisf of participants of one class"})
+                    return res.status(200).json(classes_with_participants)
                } 
             });
         
