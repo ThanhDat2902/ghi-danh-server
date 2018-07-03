@@ -14,14 +14,21 @@ router.get('/', ParticipantController.getParticipants)
 //get array of all participants who already arrived
 router.get('/current', ParticipantController.getCurrentParticipants)
 
-//Count of participants in total
+//get count of participants in total
 router.get('/count/total', ParticipantController.getParticipantsCount)
 
-//Count of participants who already arrived
+//get count of participants who already arrived
 router.get('/count/current', ParticipantController.getParticipantsCurrentCount)
 
-//Count of participants already recived their nametags
+//get count of participants already recived their nametags
 router.get('/count/nametag', ParticipantController.getParticipantsNametagCount)
+
+//get count of male participants
+router.get('/count/male', ParticipantController.getParticipantsMaleCount)
+
+router.get('/count/country', ParticipantController.getParticipantsCountry)
+
+router.get('/country', ParticipantController.getCountry)
 
 //get one participants with {:id} id
 router.get('/:id', ParticipantController.getParticipant)

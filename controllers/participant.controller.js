@@ -154,6 +154,31 @@ exports.getParticipantsCurrentCount = async function(req, res, next){
 	}
 }
 
+exports.getParticipantsMaleCount = async function(req, res, next){
+
+	// Check the existence of the query parameters, If the exists doesn't exists assign a default value
+	
+	var page = req.query.page ? req.query.page : 1
+	var limit = req.query.limit ? req.query.limit : 1000; 
+
+	try{
+		var today = new Date();
+
+		var participants = await ParticipantService.getParticipants({gender:"male"}, page, limit)
+		
+		// Return the rooms list with the appropriate HTTP Status Code and Message.
+		
+		return res.status(200).json(participants.length);
+		
+	}catch(e){
+		
+		//Return an Error Response Message with Code and the Error Message.
+		
+		return res.status(400).json({status: 400, message: e.message});
+		
+	}
+}
+
 exports.getParticipantsNametagCount = async function(req, res, next){
 
 	// Check the existence of the query parameters, If the exists doesn't exists assign a default value
@@ -179,9 +204,67 @@ exports.getParticipantsNametagCount = async function(req, res, next){
 	}
 }
 
+exports.getParticipantsCountry = async function(req, res, next){
+
+    // Check the existence of the query parameters, If the exists doesn't exists assign a default value
+    
+    var page = req.query.page ? req.query.page : 1
+    var limit = req.query.limit ? req.query.limit : 1000;
+    
+    try{
+            var classes_with_participants = [];
+
+            var list_of_classes = await ParticipantService.getDistinctValuesOfField('address_country')
+
+            list_of_classes.forEach(async function(element, index, array){
+                var classJson = {};
+                var participants = await ParticipantService.getParticipants({address_country: element}, 1, 1000);
+                
+                classJson[element] = participants.length;
+                classes_with_participants.push(classJson);
+
+               if (index === list_of_classes.length - 1){
+                    return res.status(200).json({status: 200, data: classes_with_participants, message: "Succesfully recieved a lisf of participants of one class"})
+               } 
+            });
+        
+    }catch(e){
+        
+        //Return an Error Response Message with Code and the Error Message.
+        
+        return res.status(400).json({status: 400, message: e.message});
+        
+    }
+}
+
+exports.getCountry = async function(req, res, next){
+
+    try{
+    
+        var classes = await ParticipantService.getDistinctValuesOfField('address_country')
+        
+        // Return the rooms list with the appropriate HTTP Status Code and Message.
+        
+        return res.status(200).json(classes);
+        
+    }catch(e){
+        
+        //Return an Error Response Message with Code and the Error Message.
+        
+        return res.status(400).json({status: 400, message: e.message});
+        
+    }
+}
+
+
 exports.createParticipant = async function(req, res, next){
 
 	// Req.Body contains the form submit values.
+
+	var ageDifMs = Date.now() - new Date(req.body.birth_date).getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    var p_age = Math.abs(ageDate.getUTCFullYear() - 1970);
+    console.log(p_age);
 
 	var participant = {
 		participant_id: req.body.participant_id,
@@ -190,6 +273,7 @@ exports.createParticipant = async function(req, res, next){
 		gender: req.body.gender,
 		dharma_name: req.body.dharma_name,
 		birth_date: req.body.birth_date,
+		age: p_age,
 		previous_seminars: req.body.previous_seminars,
 
 		arriaval_time: req.body.arriaval_time,
@@ -246,6 +330,13 @@ exports.updateParticipant = async function(req, res, next){
 	}
 
 	var id = req.body._id;
+
+	if(req.body.birth_date){
+		var ageDifMs = Date.now() - new Date(req.body.birth_date).getTime();
+	    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+	    var p_age = Math.abs(ageDate.getUTCFullYear() - 1970);
+	    console.log(p_age);
+	}
 
 	console.log("updateParticipant: " + req.body.recieved_nametag);
 
@@ -311,4 +402,10 @@ exports.removeParticipant = async function(req, res, next){
 		return res.status(400).json({status: 400, message: e.message})
 	}
 
+}
+
+function _calculateAge(birthday) { // birthday is a date
+    var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
 }

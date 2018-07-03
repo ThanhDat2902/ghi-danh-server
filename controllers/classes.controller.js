@@ -42,8 +42,7 @@ exports.getParticipantsClasses = async function(req, res, next){
                 var participants = await ParticipantService.getParticipants({class: element}, 1, 1000);
                 
                 classJson["class"] = element;
-                classJson["number_of_participants"] = participants.total;
-                classJson["participants"] = participants.docs;
+                classJson["participants"] = participants;
                 classes_with_participants.push(classJson);
 
                if (index === list_of_classes.length - 1){

@@ -46,6 +46,7 @@ exports.createParticipant = async function(participant){
         gender: participant.gender,
         dharma_name: participant.dharma_name,
         birth_date: participant.birth_date,
+        age: participant.age,
         previous_seminars: participant.previous_seminars,
 
         arriaval_time: participant.arriaval_time,

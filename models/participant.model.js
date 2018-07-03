@@ -8,6 +8,7 @@ var ParticipantSchema = new mongoose.Schema({
     gender: String,
     dharma_name: String,
     birth_date: Date,
+    age: Number,
     previous_seminars: String,
     
     arriaval_time: Date,
