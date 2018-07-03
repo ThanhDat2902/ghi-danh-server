@@ -204,6 +204,30 @@ exports.getParticipantsChildreenCount = async function(req, res, next){
 	}
 }
 
+exports.getParticipantsOVCount = async function(req, res, next){
+
+	// Check the existence of the query parameters, If the exists doesn't exists assign a default value
+	
+	var page = req.query.page ? req.query.page : 1
+	var limit = req.query.limit ? req.query.limit : 1000; 
+
+	try{
+		var today = new Date();
+
+		var participants = await ParticipantService.getParticipants({age:{$lt: 14}}, page, limit)
+		
+		// Return the rooms list with the appropriate HTTP Status Code and Message.
+		
+		return res.status(200).json(participants.length);
+		
+	}catch(e){
+		
+		//Return an Error Response Message with Code and the Error Message.
+		
+		return res.status(400).json({status: 400, message: e.message});
+		
+	}
+}
 exports.getParticipantsNametagCount = async function(req, res, next){
 
 	// Check the existence of the query parameters, If the exists doesn't exists assign a default value

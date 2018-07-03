@@ -32,6 +32,8 @@ router.get('/country', ParticipantController.getCountry)
 
 router.get('/count/child', ParticipantController.getParticipantsChildreenCount)
 
+router.get('/count/ov', ParticipantController.getParticipantsOVCount)
+
 //get one participants with {:id} id
 router.get('/:id', ParticipantController.getParticipant)
 
