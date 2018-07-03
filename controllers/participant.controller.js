@@ -309,11 +309,12 @@ exports.getCountry = async function(req, res, next){
 exports.createParticipant = async function(req, res, next){
 
 	// Req.Body contains the form submit values.
-
-	var ageDifMs = Date.now() - new Date(req.body.birth_date).getTime();
-    var ageDate = new Date(ageDifMs); // miliseconds from epoch
-    var p_age = Math.abs(ageDate.getUTCFullYear() - 1970);
-    console.log(p_age);
+	if(req.body.birth_date){
+		var ageDifMs = Date.now() - new Date(req.body.birth_date).getTime();
+	    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+	    var p_age = Math.abs(ageDate.getUTCFullYear() - 1970);
+	    console.log(p_age);
+	}
 
 	var participant = {
 		participant_id: req.body.participant_id,

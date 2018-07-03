@@ -26,12 +26,16 @@ router.get('/count/nametag', ParticipantController.getParticipantsNametagCount)
 //get count of male participants
 router.get('/count/male', ParticipantController.getParticipantsMaleCount)
 
+//get each country and number of citizens
 router.get('/count/country', ParticipantController.getParticipantsCountry)
 
+//get all countries
 router.get('/country', ParticipantController.getCountry)
 
+//get count of participants under 18
 router.get('/count/child', ParticipantController.getParticipantsChildreenCount)
 
+//get count of participants unter 14
 router.get('/count/ov', ParticipantController.getParticipantsOVCount)
 
 //get one participants with {:id} id
