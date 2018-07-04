@@ -399,6 +399,7 @@ exports.updateParticipant = async function(req, res, next){
 		gender: req.body.gender ? req.body.gender : null,
 		dharma_name: req.body.dharma_name ? req.body.dharma_name : null,
 		birth_date: req.body.birth_date ? req.body.birth_date : null,
+		p_age: p_age,
 		previous_seminars: req.body.previous_seminars ? req.body.previous_seminars : null,
 
 		arriaval_time: req.body.arriaval_time ? req.body.arriaval_time : null,

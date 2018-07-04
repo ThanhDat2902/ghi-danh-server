@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 var mongoosePaginate = require('mongoose-paginate')
 
 var ParticipantSchema = new mongoose.Schema({
-    participant_id: { type : Number , unique : true},
+    participant_id: {type : Number, unique : true},
     name: String,
     surname: String,
     gender: String,
