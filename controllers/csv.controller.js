@@ -59,7 +59,7 @@ exports.getParticipantsCSV = async function(req,res,next){
 exports.getParticipantNametagCSV = async function(req,res,next){
 
 	const csvWriter = createCsvWriter({
-		path: '../file.csv',
+		path: '../nametag.csv',
 		header: [
 			{id: 'participant_id', title: 'participant_id'},
 			{id: 'surname', title: 'surname'},
@@ -74,7 +74,7 @@ exports.getParticipantNametagCSV = async function(req,res,next){
 	var page = req.query.page ? req.query.page : 1
 	var limit = req.query.limit ? req.query.limit : 1;
 
-	ParticipantService.getParticipants({recieved_nametag:false}, page, limit)
+	ParticipantService.getParticipants({recieved_nametag:{$ne:true}}, page, limit)
 		.then(function(participantList) {
 
 			participantList.forEach(function(item){
@@ -85,7 +85,7 @@ exports.getParticipantNametagCSV = async function(req,res,next){
 			}) ;
 			csvWriter.writeRecords(participantList)       // returns a promise
 			    .then(() => {
-			        return res.status(200).download('../file.csv');
+			        return res.status(200).download('../nametag.csv');
 			    });
 		});
 }
@@ -95,7 +95,7 @@ exports.getParticipantNametagCSV = async function(req,res,next){
 exports.getParticipantCertificateCSV = async function(req,res,next){
 
 	const csvWriter = createCsvWriter({
-		path: '../file.csv',
+		path: '../certificate.csv',
 		header: [
 			{id: 'surname', title: 'surname'},
 			{id: 'name', title: 'name'},
@@ -113,7 +113,7 @@ exports.getParticipantCertificateCSV = async function(req,res,next){
 			csvWriter.writeRecords(value)       // returns a promise
 			    .then(() => {
 			        console.log(value[0]);
-			        return res.status(200).download('../file.csv');
+			        return res.status(200).download('../certificate.csv');
 			    });
 		});
 }
@@ -123,7 +123,7 @@ exports.getParticipantCertificateCSV = async function(req,res,next){
 exports.getParticipantsListCSV = async function(req,res,next){
 
 	const csvWriter = createCsvWriter({
-		path: '../file.csv',
+		path: '../p_list.csv',
 		header: [
 			{id: 'surname', title: 'surname'},
 			{id: 'name', title: 'name'},
@@ -141,7 +141,7 @@ exports.getParticipantsListCSV = async function(req,res,next){
 			csvWriter.writeRecords(value)       // returns a promise
 			    .then(() => {
 			        console.log(value[0]);
-			        return res.status(200).download('../file.csv');
+			        return res.status(200).download('../p_list.csv');
 			    });
 		});
 }
@@ -151,7 +151,7 @@ exports.getParticipantsListCSV = async function(req,res,next){
 exports.getParticipantsClassCSV = async function(req,res,next){
 	
 	const csvWriter = createCsvWriter({
-		path: '../file.csv',
+		path: '../class.csv',
 		header: [
 			{id: 'surname', title: 'surname'},
 			{id: 'name', title: 'name'},
@@ -169,7 +169,7 @@ exports.getParticipantsClassCSV = async function(req,res,next){
 			csvWriter.writeRecords(value)       // returns a promise
 			    .then(() => {
 			        console.log(value[0]);
-			        return res.status(200).download('../file.csv');
+			        return res.status(200).download('../class.csv');
 			    });
 		});
 
@@ -180,7 +180,7 @@ exports.getParticipantsClassCSV = async function(req,res,next){
 exports.getParticipantsBedroomCSV = async function(req,res,next){
 	
 	const csvWriter = createCsvWriter({
-		path: '../file.csv',
+		path: '../bedroom.csv',
 		header: [
 			{id: 'surname', title: 'surname'},
 			{id: 'name', title: 'name'},
@@ -201,7 +201,37 @@ exports.getParticipantsBedroomCSV = async function(req,res,next){
 			    .then(() => {
 			        if(value[0]){console.log(value[0].arriaval_time);}
 			        console.log(new Date());
-			        return res.status(200).download('../file.csv');
+			        return res.status(200).download('../bedroom.csv');
+			    });
+		});
+
+}
+
+exports.getDonationsCSV = async function(req,res,next){
+	
+	const csvWriter = createCsvWriter({
+		path: '../donations.csv',
+		header: [
+			{id: 'surname', title: 'surname'},
+			{id: 'name', title: 'name'},
+			{id: 'dharma_name', title: 'dharma_name'},
+			{id: 'semiar_donation', title: 'semiar_donation'},
+			{id: 'monk_donation', title: 'monk_donation'},
+			{id: 'rice_donation', title: 'rice_donation'},
+
+		]
+	});
+
+	var page = req.query.page ? req.query.page : 1
+	var limit = req.query.limit ? req.query.limit : 1000;
+
+	ParticipantService.getParticipants({}, page, limit)
+		.then(function(value) {
+
+			csvWriter.writeRecords(value)       // returns a promise
+			    .then(() => {
+			        console.log(value[0]);
+			        return res.status(200).download('../donations.csv');
 			    });
 		});
 

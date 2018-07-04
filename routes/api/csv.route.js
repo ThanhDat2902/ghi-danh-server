@@ -21,6 +21,7 @@ router.get('/class/:id',CSVController.getParticipantsClassCSV)
 
 router.get('/bedroom/:id',CSVController.getParticipantsBedroomCSV)
 
+router.get('/donations',CSVController.getDonationsCSV)
 
 // Export the Router
 
