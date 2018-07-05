@@ -267,10 +267,10 @@ exports.getParticipantsCountry = async function(req, res, next){
 
             list_of_classes.forEach(async function(element, index, array){
                 var classJson = {};
-                var participants = await ParticipantService.getParticipants({address_country: element}, 1, 1000);
+                var participants = await ParticipantService.countParticipants({address_country: element}, 1, 1000);
                 
                 classJson["country"] = element;
-                classJson["count"] = participants.length;
+                classJson["count"] = participants;
                 classes_with_participants.push(classJson);
 
                if (index === list_of_classes.length - 1){
