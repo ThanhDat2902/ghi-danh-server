@@ -34,6 +34,32 @@ exports.getParticipants = async function(query, page, limit){
     }
 }
 
+exports.countParticipants = async function(query, page, limit){
+
+    // Options setup for the mongoose paginate
+
+    var options = {
+        page,
+        limit
+    }
+    
+    // Try Catch the awaited promise to handle the error 
+    
+    try {
+        //var participants = await Participant.paginate(query, options)
+        var participants = await Participant.count(query);
+
+        return participants;
+        
+
+    } catch (e) {
+
+        // return a Error message describing the reason 
+
+        throw Error('Error while Paginating Participants')
+    }
+}
+
 exports.createParticipant = async function(participant){
     
     // Creating a new Mongoose Object by using the new keyword

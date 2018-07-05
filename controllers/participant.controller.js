@@ -114,11 +114,11 @@ exports.getParticipantsCount = async function(req, res, next){
 
 	try{
 	
-		var participants = await ParticipantService.getParticipants({}, page, limit)
+		var participants = await ParticipantService.countParticipants({}, page, limit)
 		
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
-		return res.status(200).json(participants.length);
+		return res.status(200).json(participants);
 		
 	}catch(e){
 		
@@ -139,11 +139,11 @@ exports.getParticipantsCurrentCount = async function(req, res, next){
 	try{
 		var today = new Date();
 
-		var participants = await ParticipantService.getParticipants({arriaval_time: {$lt: today}}, page, limit)
+		var participants = await ParticipantService.countParticipants({arriaval_time: {$lt: today}}, page, limit)
 		
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
-		return res.status(200).json(participants.length);
+		return res.status(200).json(participants);
 		
 	}catch(e){
 		
@@ -164,11 +164,11 @@ exports.getParticipantsMaleCount = async function(req, res, next){
 	try{
 		var today = new Date();
 
-		var participants = await ParticipantService.getParticipants({gender:"male"}, page, limit)
+		var participants = await ParticipantService.countParticipants({gender:"male"}, page, limit)
 		
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
-		return res.status(200).json(participants.length);
+		return res.status(200).json(participants);
 		
 	}catch(e){
 		
@@ -189,11 +189,11 @@ exports.getParticipantsChildreenCount = async function(req, res, next){
 	try{
 		var today = new Date();
 
-		var participants = await ParticipantService.getParticipants({age:{$lt: 18}}, page, limit)
+		var participants = await ParticipantService.countParticipants({age:{$lt: 18}}, page, limit)
 		
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
-		return res.status(200).json(participants.length);
+		return res.status(200).json(participants);
 		
 	}catch(e){
 		
@@ -214,11 +214,11 @@ exports.getParticipantsOVCount = async function(req, res, next){
 	try{
 		var today = new Date();
 
-		var participants = await ParticipantService.getParticipants({age:{$lt: 14}}, page, limit)
+		var participants = await ParticipantService.countParticipants({age:{$lt: 14}}, page, limit)
 		
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
-		return res.status(200).json(participants.length);
+		return res.status(200).json(participants);
 		
 	}catch(e){
 		
@@ -238,11 +238,11 @@ exports.getParticipantsNametagCount = async function(req, res, next){
 	try{
 		var today = new Date();
 
-		var participants = await ParticipantService.getParticipants({recieved_nametag:true}, page, limit)
+		var participants = await ParticipantService.countParticipants({recieved_nametag:true}, page, limit)
 		
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
-		return res.status(200).json(participants.length);
+		return res.status(200).json(participants);
 		
 	}catch(e){
 		
