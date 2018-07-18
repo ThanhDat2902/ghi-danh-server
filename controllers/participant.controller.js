@@ -8,7 +8,7 @@ _this = this
 
 exports.getParticipants = async function(req, res, next){
 
-	// Check the existence of the query parameters, If the exists doesn't exists assign a default value
+	// Check the existence of the query parameters, If the exists doesn't exists assign a default value.
 	
 	var page = req.query.page ? req.query.page : 1
 	var limit = req.query.limit ? req.query.limit : 1000; 
@@ -40,7 +40,7 @@ exports.getCurrentParticipants = async function(req, res, next){
 	try{
 		var today = new Date();
 
-		var participants = await ParticipantService.getParticipants({arriaval_time: {$lt: today}}, page, limit)
+		var participants = await ParticipantService.getParticipants({$and: [{arriaval_time: {$lt: today}}, {departure_time: {$gt: today}} ]}, page, limit)
 		
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
@@ -94,7 +94,7 @@ exports.getParticipantsInRoom = async function(req, res, next){
 		
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
-		return res.status(200).json({status: 200, data: participants, message: "Succesfully recieved list of participants in one room"});
+		return res.status(200).json({status: 200, data: participants, message: "Successfully received list of participants in one room"});
 		
 	}catch(e){
 		
@@ -139,7 +139,7 @@ exports.getParticipantsCurrentCount = async function(req, res, next){
 	try{
 		var today = new Date();
 
-		var participants = await ParticipantService.countParticipants({arriaval_time: {$lt: today}}, page, limit)
+		var participants = await ParticipantService.countParticipants({$and: [{arriaval_time: {$lt: today}}, {departure_time: {$gt: today}} ]}, page, limit)
 		
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
@@ -263,9 +263,9 @@ exports.getParticipantsCountry = async function(req, res, next){
     try{
             var classes_with_participants = [];
 
-            var list_of_classes = await ParticipantService.getDistinctValuesOfField('address_country')
+            var list_of_country = await ParticipantService.getDistinctValuesOfField('address_country')
 
-            list_of_classes.forEach(async function(element, index, array){
+            list_of_country.forEach(async function(element, index, array){
                 var classJson = {};
                 var participants = await ParticipantService.countParticipants({address_country: element}, 1, 1000);
                 
@@ -273,7 +273,7 @@ exports.getParticipantsCountry = async function(req, res, next){
                 classJson["count"] = participants;
                 classes_with_participants.push(classJson);
 
-               if (index === list_of_classes.length - 1){
+               if (index === list_of_country.length - 1){
                     return res.status(200).json(classes_with_participants)
                } 
             });
@@ -291,11 +291,11 @@ exports.getCountry = async function(req, res, next){
 
     try{
     
-        var classes = await ParticipantService.getDistinctValuesOfField('address_country')
+        var country = await ParticipantService.getDistinctValuesOfField('address_country')
         
         // Return the rooms list with the appropriate HTTP Status Code and Message.
         
-        return res.status(200).json(classes);
+        return res.status(200).json(country);
         
     }catch(e){
         
@@ -384,7 +384,7 @@ exports.updateParticipant = async function(req, res, next){
 
 	if(req.body.birth_date){
 		var ageDifMs = Date.now() - new Date(req.body.birth_date).getTime();
-	    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+	    var ageDate = new Date(ageDifMs); // milliseconds from epoch
 	    var p_age = Math.abs(ageDate.getUTCFullYear() - 1970);
 	    console.log(p_age);
 	}
@@ -437,7 +437,7 @@ exports.updateParticipant = async function(req, res, next){
 
 	try{
 		var updatedParticipant = await ParticipantService.updateParticipant(participant)
-		return res.status(200).json({status: 200, data: updatedParticipant, message: "Succesfully Updated Participant"})
+		return res.status(200).json({status: 200, data: updatedParticipant, message: "Successfully Updated Participant"})
 	}catch(e){
 		return res.status(400).json({status: 400., message: e.message})
 	}
@@ -449,7 +449,7 @@ exports.removeParticipant = async function(req, res, next){
 
 	try{
 		var deleted = await ParticipantService.deleteParticipant(id)
-		return res.status(204).json({status:204, message: "Succesfully Deleted Participant"})
+		return res.status(204).json({status:204, message: "Successfully Deleted Participant"})
 	}catch(e){
 		return res.status(400).json({status: 400, message: e.message})
 	}
@@ -458,6 +458,6 @@ exports.removeParticipant = async function(req, res, next){
 
 function _calculateAge(birthday) { // birthday is a date
     var ageDifMs = Date.now() - birthday.getTime();
-    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    var ageDate = new Date(ageDifMs); // milliseconds from epoch
     return Math.abs(ageDate.getUTCFullYear() - 1970);
 }

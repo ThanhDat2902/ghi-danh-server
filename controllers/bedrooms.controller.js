@@ -58,7 +58,7 @@ exports.getParticipantsBedrooms = async function(req, res, next){
                 bedrooms_with_participants.push(bedroomJson);
 
                if (index === list_of_bedrooms.docs.length - 1){
-                    return res.status(200).json({status: 200, data: bedrooms_with_participants, message: "Succesfully recieved a lisf of participants of one class"})
+                    return res.status(200).json({status: 200, data: bedrooms_with_participants, message: "Successfully received a list of participants of one class"})
                } 
             });
         
@@ -84,7 +84,7 @@ exports.getOneBedroom = async function(req, res, next){
         
         // Return the rooms list with the appropriate HTTP Status Code and Message.
         
-        return res.status(200).json({status: 200, data: participants, message: "Succesfully Recieved Participants in one Bedroom"});
+        return res.status(200).json({status: 200, data: participants, message: "Successfully Received Participants in one Bedroom"});
         
     }catch(e){
         
@@ -107,7 +107,7 @@ exports.getOneBedroomToday = async function(req, res, next){
         
         // Return the rooms list with the appropriate HTTP Status Code and Message.
         
-        return res.status(200).json({status: 200, data: participants, message: "Succesfully Recieved Participants in one Bedroom"});
+        return res.status(200).json({status: 200, data: participants, message: "Successfully Received Participants in one Bedroom"});
         
     }catch(e){
         
@@ -135,12 +135,12 @@ exports.createBedroom = async function(req, res, next){
         // Calling the Service function with the new object from the Request Body
     
         var createdBedroom = await BedroomService.createBedroom(bedroom)
-        return res.status(201).json({status: 201, data: createdBedroom, message: "Succesfully Created Bedroom"})
+        return res.status(201).json({status: 201, data: createdBedroom, message: "Successfully Created Bedroom"})
     }catch(e){
         
         //Return an Error Response Message with Code and the Error Message.
         
-        return res.status(400).json({status: 400, message: "Bedroom Creation was Unsuccesfull"})
+        return res.status(400).json({status: 400, message: "Bedroom Creation was Unsuccessful"})
     }
 }
 
@@ -167,7 +167,7 @@ exports.updateBedroom = async function(req, res, next){
 
     try{
         var updatedBedroom = await BedroomService.updateBedroom(bedroom)
-        return res.status(200).json({status: 200, data: updatedBedroom, message: "Succesfully Updated Bedroom"})
+        return res.status(200).json({status: 200, data: updatedBedroom, message: "Successfully Updated Bedroom"})
     }catch(e){
         return res.status(400).json({status: 400., message: e.message})
     }
@@ -179,7 +179,7 @@ exports.removeBedroom = async function(req, res, next){
 
     try{
         var deleted = await BedroomService.deleteBedroom(id)
-        return res.status(204).json({status:204, message: "Succesfully Deleted Bedroom"})
+        return res.status(204).json({status:204, message: "Successfully Deleted Bedroom"})
     }catch(e){
         return res.status(400).json({status: 400, message: e.message})
     }
