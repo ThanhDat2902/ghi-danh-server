@@ -60,6 +60,36 @@ exports.countParticipants = async function(query, page, limit){
     }
 }
 
+exports.sumDonations = async function(){
+    
+    // Try Catch the awaited promise to handle the error 
+    
+    try {
+        var donations = await Participant.aggregate(
+           [
+             {
+               $group:
+                 {
+                    _id: null,
+                    semiar_donation: { $sum: "$semiar_donation" },
+                    monk_donation: { $sum: "$monk_donation" },
+                    rice_donation: { $sum: "$rice_donation" },                 }
+             }
+           ]
+        );
+
+        return donations;
+        
+
+    } catch (e) {
+
+        // return a Error message describing the reason 
+
+        throw Error(e)
+    }
+}
+
+
 exports.createParticipant = async function(participant){
     
     // Creating a new Mongoose Object by using the new keyword

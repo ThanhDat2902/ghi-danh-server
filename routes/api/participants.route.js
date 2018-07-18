@@ -38,6 +38,8 @@ router.get('/count/child', ParticipantController.getParticipantsChildreenCount)
 //get count of participants unter 14
 router.get('/count/ov', ParticipantController.getParticipantsOVCount)
 
+router.get('/donations', ParticipantController.getDonations)
+
 //get one participants with {:id} id
 router.get('/:id', ParticipantController.getParticipant)
 

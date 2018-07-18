@@ -46,7 +46,7 @@ exports.getParticipantsClasses = async function(req, res, next){
                 classes_with_participants.push(classJson);
 
                if (index === list_of_classes.length - 1){
-                    return res.status(200).json({status: 200, data: classes_with_participants, message: "Succesfully recieved a lisf of participants of one class"})
+                    return res.status(200).json({status: 200, data: classes_with_participants, message: "Successfully received a list of participants of one class"})
                } 
             });
         
@@ -73,7 +73,7 @@ exports.getOneClass = async function(req, res, next){
         
         // Return the rooms list with the appropriate HTTP Status Code and Message.
         
-        return res.status(200).json({status: 200, data: participants, message: "Succesfully recieved a lisf of participants of one class"});
+        return res.status(200).json({status: 200, data: participants, message: "Successfully received a list of participants of one class"});
         
     }catch(e){
         

@@ -306,6 +306,25 @@ exports.getCountry = async function(req, res, next){
     }
 }
 
+exports.getDonations = async function(req, res, next){
+
+    try{
+    
+        var donations = await ParticipantService.sumDonations();
+        
+        // Return the rooms list with the appropriate HTTP Status Code and Message.
+        
+        return res.status(200).json(donations);
+        
+    }catch(e){
+        
+        //Return an Error Response Message with Code and the Error Message.
+        
+        return res.status(400).json({status: 400, message: e.message});
+        
+    }
+}
+
 
 exports.createParticipant = async function(req, res, next){
 
