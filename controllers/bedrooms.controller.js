@@ -16,7 +16,7 @@ exports.getBedrooms = async function(req, res, next){
     // Check the existence of the query parameters, If the exists doesn't exists assign a default value
     
     var page = req.query.page ? req.query.page : 1
-    var limit = req.query.limit ? req.query.limit : 10; 
+    var limit = req.query.limit ? req.query.limit : 1000; 
 
     try{
     
@@ -51,7 +51,6 @@ exports.getParticipantsBedrooms = async function(req, res, next){
             list_of_bedrooms.docs.forEach(async function(element, index, array){
                 var bedroomJson = {};
                 var participants = await ParticipantService.getParticipants({bedroom: element._id}, 1, 1000);
-                console.log(participants)
                 bedroomJson["bedroom"] = element.name;
                 bedroomJson["number_of_participants"] = participants.length;
                 bedroomJson["participants"] = participants;
@@ -102,8 +101,9 @@ exports.getOneBedroomToday = async function(req, res, next){
     var bedroom_id = req.params.bedroom_id;
 
     try{
-    
-        var participants = await ParticipantService.getParticipants({"bedroom": bedroom_id, 'arriaval.time': {$lte: new Date()}, 'departure.time': {$gte: new Date()}}, page, limit)
+        var today = new Date();
+        
+        var participants = await ParticipantService.getParticipants({$and: [{bedroom: bedroom_id},{arriaval_time: {$lt: today}}, {departure_time: {$gt: today}}]}, page, limit)
         
         // Return the rooms list with the appropriate HTTP Status Code and Message.
         

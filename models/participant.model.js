@@ -25,7 +25,7 @@ var ParticipantSchema = new mongoose.Schema({
     address_zip_code: Number,
     address_country: String,
     
-    telnr: Number,
+    telnr: String,
     email: String,
     fees: Number,
     semiar_donation: Number,

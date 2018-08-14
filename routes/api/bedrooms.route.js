@@ -14,10 +14,10 @@ router.get('/', BedroomController.getBedrooms)
 //get lists of all participants sorted by bedrooms
 router.get('/participants', BedroomController.getParticipantsBedrooms)
 
+router.get('/today/:bedroom_id', BedroomController.getOneBedroomToday)
+
 //get list of participants of one bedroom
 router.get('/:bedroom_id', BedroomController.getOneBedroom)
-
-router.get('/:bedroom_id/today', BedroomController.getOneBedroomToday)
 
 router.post('/', BedroomController.createBedroom)
 

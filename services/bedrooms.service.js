@@ -13,7 +13,8 @@ exports.getBedrooms = async function(query, page, limit){
 
     var options = {
         page,
-        limit
+        limit,
+        sort:     { name: 1 },
     }
     
     // Try Catch the awaited promise to handle the error 
@@ -21,14 +22,14 @@ exports.getBedrooms = async function(query, page, limit){
     try {
         var bedrooms = await Bedroom.paginate(query, options)
         
-        // Return the room list that was retured by the mongoose promise
+        // Return the room list that was returned by the mongoose promise
         return bedrooms.docs;
 
     } catch (e) {
 
         // return a Error message describing the reason 
 
-        throw Error('Error while Paginating Bedrooms')
+        throw Error(e)
     }
 }
 
@@ -67,7 +68,7 @@ exports.updateBedroom = async function(bedroom){
     
         var oldBedroom = await Bedroom.findById(id);
     }catch(e){
-        throw Error("Error occured while Finding the Room")
+        throw Error("Error occurred while Finding the Room")
     }
 
     // If no old Room Object exists return false
@@ -92,7 +93,7 @@ exports.updateBedroom = async function(bedroom){
         var savedBedroom = await oldBedroom.save()
         return savedBedroom;
     }catch(e){
-        throw Error("And Error occured while updating the Bedroom");
+        throw Error("And Error occurred while updating the Bedroom");
     }
 }
 

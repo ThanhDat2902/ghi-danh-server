@@ -1,4 +1,4 @@
-// Gettign the Newly created Mongoose Model we just created 
+// Getting the Newly created Mongoose Model we just created 
 
 var Participant = require('../models/participant.model')
 var Bedroom = require('../models/bedroom.model')
@@ -14,16 +14,19 @@ exports.getParticipants = async function(query, page, limit){
 
     var options = {
         page,
-        limit
+        limit,
+        sort:{ participant_id: -1 },
     }
     
     // Try Catch the awaited promise to handle the error 
     
     try {
-        //var participants = await Participant.paginate(query, options)
-        var participants = await Participant.find(query);
+        var participants = await Participant.paginate(query, options)
+        //var participants = await Participant.find(query, options);
 
-        return participants;
+        //participants.sort
+
+        return participants.docs;
         
 
     } catch (e) {
@@ -71,9 +74,9 @@ exports.sumDonations = async function(){
                $group:
                  {
                     _id: null,
+                    fees: { $sum: "$fees" },
                     semiar_donation: { $sum: "$semiar_donation" },
-                    monk_donation: { $sum: "$monk_donation" },
-                    rice_donation: { $sum: "$rice_donation" },                 }
+                    monk_donation: { $sum: "$monk_donation" },                 }
              }
            ]
         );
@@ -158,7 +161,7 @@ exports.updateParticipant = async function(participant){
     
         var oldParticipant = await Participant.findById(id);
     }catch(e){
-        throw Error("Error occured while Finding the Participant")
+        throw Error("Error occurred while Finding the Participant")
     }
 
     // If no old Room Object exists return false
@@ -167,8 +170,6 @@ exports.updateParticipant = async function(participant){
         return false;
     }
     console.log('participants.service.js')
-
-    console.log(oldParticipant)
 
     //Edit the Participant Object
     
@@ -211,13 +212,11 @@ exports.updateParticipant = async function(participant){
     oldParticipant.recieved_nametag = participant.recieved_nametag
 
 
-    console.log(oldParticipant)
-
     try{
         var savedParticipant = await oldParticipant.save()
         return savedParticipant;
     }catch(e){
-        throw Error("And Error occured while updating the Participant");
+        throw Error("And Error occurred while updating the Participant");
     }
 }
 

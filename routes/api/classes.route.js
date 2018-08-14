@@ -17,6 +17,7 @@ router.get('/participants', ClassesController.getParticipantsClasses)
 //get list of participants of one class
 router.get('/:class_id', ClassesController.getOneClass)
 
+router.get('/count/:class_id', ClassesController.getOneClassCount)
 
 // Export the Router
 

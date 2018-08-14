@@ -187,9 +187,10 @@ exports.getParticipantsChildreenCount = async function(req, res, next){
 	var limit = req.query.limit ? req.query.limit : 1000; 
 
 	try{
-		var today = new Date();
+		var d = new Date(2006,00);
+		var d2 = new Date(2000,00);
 
-		var participants = await ParticipantService.countParticipants({age:{$lt: 18}}, page, limit)
+		var participants = await ParticipantService.countParticipants({birth_date:{$gt: d2,$lt: d}}, page, limit)
 		
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
@@ -212,9 +213,9 @@ exports.getParticipantsOVCount = async function(req, res, next){
 	var limit = req.query.limit ? req.query.limit : 1000; 
 
 	try{
-		var today = new Date();
+		var d = new Date(2006,00);
 
-		var participants = await ParticipantService.countParticipants({age:{$lt: 14}}, page, limit)
+		var participants = await ParticipantService.countParticipants({birth_date:{ $gt : d }}, page, limit)
 		
 		// Return the rooms list with the appropriate HTTP Status Code and Message.
 		
