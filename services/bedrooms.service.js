@@ -1,5 +1,3 @@
-// Gettign the Newly created Mongoose Model we just created 
-
 var Bedroom = require('../models/bedroom.model')
 
 // Saving the context of this module inside the _the variable
