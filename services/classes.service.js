@@ -1,11 +1,11 @@
-var Event = require('../models/event.model')
+var Class = require('../models/class.model')
 
 // Saving the context of this module inside the _the variable
 _this = this
 
 // Async function to get the To do List
 
-exports.getEvents = async function(query, page, limit){
+exports.getClasses = async function(query, page, limit){
 
     // Options setup for the mongoose paginate
 
@@ -18,10 +18,10 @@ exports.getEvents = async function(query, page, limit){
     // Try Catch the awaited promise to handle the error 
     
     try {
-        var events = await Event.paginate(query, options)
+        var classes = await Class.find().populate('event')
         
         // Return the room list that was returned by the mongoose promise
-        return events.docs;
+        return classes;
 
     } catch (e) {
 
@@ -31,24 +31,23 @@ exports.getEvents = async function(query, page, limit){
     }
 }
 
-exports.createEvent = async function(event){
+exports.createClass = async function(inputClass){
     
     // Creating a new Mongoose Object by using the new keyword
 
-    var newEvent = new Event({
-        name: event.name,
-        location: event.location,
-        start: event.start,
-        end: event.end,
+    var newClass = new Class({
+        name: inputClass.name,
+        event: inputClass.event,
+        describtion: inputClass.describtion,
     })
 
     try{
 
         // Saving the room 
 
-        var savedEvent = await newEvent.save()
+        var savedClass = await newClass.save()
 
-        return savedEvent;
+        return savedClass;
 
     }catch(e){
       
@@ -58,47 +57,44 @@ exports.createEvent = async function(event){
     }
 }
 
-exports.updateEvent = async function(event){
-    var id = event.id
+exports.updateClass = async function(inputClass){
+    var id = inputClass.id
 
     try{
         //Find the old Room Object by the Id
     
-        var oldEvent = await Event.findById(id);
+        var oldClass = await Class.findById(id);
     }catch(e){
-        throw Error("Error occurred while finding the event")
+        throw Error("Error occurred while finding the class")
     }
 
     // If no old Room Object exists return false
 
-    if(!oldEvent){
+    if(!oldClass){
         return false;
     }
 
-    console.log(oldEvent)
+    console.log(oldClass)
 
     //Edit the Room Object
-    oldEvent.name = event.name,
-    oldEvent.location = event.location,
-    oldEvent.start = event.start,
-    oldEvent.end = event.end
+    oldClass.name = inputClass.name,
+    oldClass.event = inputClass.event,
+    oldClass.describtion = inputClass.describtion
 
     try{
-        var savedEvent = await oldEvent.save()
-        return savedEvent;
+        var savedClass = await oldClass.save()
+        return savedClass;
     }catch(e){
-        throw Error("And Error occurred while updating the event");
+        throw Error("And Error occurred while updating the class");
     }
 }
 
-exports.deleteEvent = async function(id){
+exports.deleteClass = async function(id){
     
-    // Delete the Room
-
     try{
-        var deleted = await Event.remove({_id: id})
+        var deleted = await Class.remove({_id: id})
         if(deleted.result.n === 0){
-            throw Error("Event Could not be deleted")
+            throw Error("Class Could not be deleted")
         }
         return deleted
     }catch(e){
